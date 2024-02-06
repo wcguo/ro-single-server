@@ -1,5 +1,13 @@
 FROM php:5.6.40-apache
 
+# 时区
+ENV TZ "Asia/Shanghai"
+RUN echo ${TZ} >/etc/timezone
+
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org|archive.debian.org/|g' \
+           -e '/stretch-updates/d' /etc/apt/sources.list
+           
 RUN apt-get update -y
 RUN apt-get install -y libjpeg-dev libpng-dev
 
